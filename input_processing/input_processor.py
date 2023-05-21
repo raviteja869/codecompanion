@@ -1,8 +1,17 @@
 import json
+import ast
 
 def parse_input(input_string):
     return json.loads(input_string)
 
+
+
+def is_valid_python(code):
+    try:
+        ast.parse(code)
+        return True
+    except SyntaxError:
+        return False
 
 
 
@@ -66,11 +75,14 @@ def process_input():
     try:
         input_string = get_user_input()
         input_dict = parse_input(input_string)
+        if not is_valid_python(input_dict.get('code')):
+            raise ValueError("Invalid Python code")
         key_info = extract_key_info(input_dict)
         processed_input = prepare_for_analysis(*key_info)
     except Exception as e:
         raise RuntimeError("Failed to process input") from e
     return processed_input
+
 
 
 

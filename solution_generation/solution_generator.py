@@ -1,6 +1,6 @@
 import openai
 
-openai.api_key = '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'
+openai.api_key = 'sk-APIKEY'
 
 def generate_solution(code, problem):
     prompt = f"{code}\n# Problem: {problem}\n# Solution:"

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeCompanion</title>
+</head>
+<body>
+    <h1>CodeCompanion</h1>
+    <form method="post">
+        <label for="code">Code:</label><br>
+        <textarea id="code" name="code" rows="4" cols="50"></textarea><br>
+        <label for="problem">Problem Description:</label><br>
+        <textarea id="problem" name="problem" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% if output %}
+    <h2>Output:</h2>
+    <p>{{ output }}</p>
+    {% endif %}
+</body>
+</html>

@@ -10,6 +10,32 @@ from code_analysis.code_analyzer import analyze_code
 from solution_generation.solution_generator import generate_solution
 from output_processing.output_processor import process_output
 from flask_mail import Message
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMessage
+
+def send_verification_email(request, user):
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    mail_subject = 'Activate your account.'
+    message = render_to_string('acc_active_email.html', {
+        'user': user,
+        'domain': request.META['HTTP_HOST'],
+        'uid': uid,
+        'token': token,
+    })
+    to_email = user.email
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    email.send()
+
+
+urlpatterns = [
+    path('reset_password/', PasswordResetView.as_view(), name='reset_password')
+]
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

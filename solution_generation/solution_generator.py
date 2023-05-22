@@ -1,8 +1,8 @@
 import openai
 from pylint import epylint as lint
-from bugspots import Bugspots
+from bug_predictor import BugPredictor  # hypothetical class
 
-openai.api_key = 'sk-APIKEY'
+openai.api_key = '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'
 
 def generate_solution(code, problem):
     # Analyze the code for errors and code smells
@@ -10,8 +10,8 @@ def generate_solution(code, problem):
     pylint_output = pylint_stdout.getvalue()
 
     # Predict potential bugs in the code
-    bugspots = Bugspots()
-    bug_prediction = bugspots.get_hotspots(code)
+    bug_predictor = BugPredictor()
+    bug_prediction = bug_predictor.predict(code)
 
     # Create a prompt for GPT-3 that includes the code, problem description, pylint output, and bug prediction
     prompt = f"{code}\n# Problem: {problem}\n# Pylint Output: {pylint_output}\n# Bug Prediction: {bug_prediction}\n# Solution:"
